@@ -15,7 +15,7 @@ function Header() {
             <i className="fi text-2xl mt-2 text-orange-500 fi-rs-angle-small-down"></i>
           </div>
         </div>
-
+          
         <div className="flex items-center gap-6">
             <div className="flex ">
                 <i className="fi fi-rr-shopping-bag"></i>
