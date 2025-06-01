@@ -1,6 +1,33 @@
 import React from "react";
 
 function Header() {
+  const navItems = [
+    {
+      name: "Swiggy Corporate",
+      image: "fi-rr-shopping-bag"
+    },
+    {
+      name: "Search",
+      image: "fi-rr-search"
+    },
+    {
+      name: "Offers",
+      image:  "fi-rr-badge-percent"
+    },
+    {
+      name: "Help",
+      image: "fi-sr-life-ring"
+    },
+    {
+      name: "Sign in",
+      image: "fi-rr-user"
+    },
+    {
+      name: "Cart",
+      image: "fi-rr-shopping-cart-add"
+    }
+  ]
+
   return (
     <div className="w-full shadow-md h-24 flex justify-center items-center">
       <div className=" w-[70%] flex justify-between">
@@ -16,31 +43,17 @@ function Header() {
           </div>
         </div>
           
-        <div className="flex items-center gap-6">
-            <div className="flex ">
-                <i className="fi fi-rr-shopping-bag"></i>
-                <p>Swiggy Corporate</p>
+        <div className="flex items-center gap-12">
+          {
+            navItems.map((data, i) => (
+              <div className="flex items-center gap-2 " key={i}>
+                {/* <i className="fi fi-rr-shopping-bag"></i> */}
+                <i className={"mt-1 fi " + data.image}></i>
+                <p className="text-sm font-medium text-gray-700">{data.name}</p>
             </div>
-            <div className="flex ">
-                <i className="fi-rr-search"></i>
-                <p>Search</p>
-            </div>
-            <div className="flex ">
-                <i className="fi fi-rr-badge-percent"></i>
-                <p>Offers</p>
-            </div>
-            <div className="flex ">
-                <i className="fi fi-sr-life-ring"></i>
-                <p>Help</p>
-            </div>
-            <div className="flex ">
-                <i className="fi-rr-user"></i> // Start from 8:00 Part 2
-                <p>Sign in</p>
-            </div>
-            <div className="flex ">
-                <i className="fi-rr-shopping-cart-add"></i>
-                <p>Cart</p>
-            </div>
+            ))
+          }
+            
         </div>
       </div>
     </div>
