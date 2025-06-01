@@ -22,23 +22,23 @@ function Header() {
                 <p>Swiggy Corporate</p>
             </div>
             <div className="flex ">
-                <i className="fi fi-rr-shopping-bag"></i>
+                <i className="fi-rr-search"></i>
                 <p>Search</p>
             </div>
             <div className="flex ">
-                <i className="fi fi-rr-shopping-bag"></i>
+                <i className="fi fi-rr-badge-percent"></i>
                 <p>Offers</p>
             </div>
             <div className="flex ">
-                <i className="fi fi-rr-shopping-bag"></i>
+                <i className="fi fi-sr-life-ring"></i>
                 <p>Help</p>
             </div>
             <div className="flex ">
-                <i className="fi fi-rr-shopping-bag"></i>
+                <i className="fi-rr-user"></i> // Start from 8:00 Part 2
                 <p>Sign in</p>
             </div>
             <div className="flex ">
-                <i className="fi fi-rr-shopping-bag"></i>
+                <i className="fi-rr-shopping-cart-add"></i>
                 <p>Cart</p>
             </div>
         </div>

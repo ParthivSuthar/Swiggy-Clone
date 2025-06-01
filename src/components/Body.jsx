@@ -34,7 +34,7 @@ function Body() {
     <div className="w-full">
       <div className="w-[75%] mx-auto mt-3  overflow-hidden ">
         <div className="flex justify-between mt-5">
-          <h1 className="font-bold text-2xl">What &apos;s in your mind</h1>
+          <h1 className="font-bold text-2xl">What &apos;s on your mind</h1>
           <div className="flex gap-3">
             <div
               onClick={handlePrev}
