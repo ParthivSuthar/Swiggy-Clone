@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-function TopRestaurant() {
+function TopRestaurant({data}) {
   const [value, setValue] = useState(0);
-  const [data, setData] = useState([]);
 
   function handleNext() {
     value >= 124 ? "" : setValue((prev) => prev + 31);
@@ -12,29 +11,7 @@ function TopRestaurant() {
     value <= 0 ? "" : setValue((prev) => prev - 30);
   }
 
-  async function fetchData() {
-    try {
-      const response = await fetch(
-        "/api/dapi/restaurants/list/v5?lat=28.6126255&lng=77.04108959999999&page_type=DESKTOP_WEB_LISTING"
-      );
-      const result = await response.json();
-      console.log(
-        result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-
-      setData(
-        result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-    } catch (err) {
-      console.error("Failed to fetch data:", err);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  
 
   return (
     <div className="mt-14">
@@ -72,16 +49,25 @@ function TopRestaurant() {
         </div>
       </div>
       <div className={`flex mt-2 gap-3`}>
-        {data.map((restaurant) => (
-          <div className="min-w-[295px] h-[182px]" key={restaurant?.info?.id}>
+        {data.map((info) => (
+          <div className="min-w-[295px] h-[182px] relative" key={info?.id}>
             <img
               className="w-full h-full  rounded-2xl object-cover"
-              src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_376,h_376/${restaurant?.info?.cloudinaryImageId}`}
+              src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_376,h_376/${info?.info?.cloudinaryImageId}`}
             />
+            <div className="bg-gradient-to-t from-black from-1% to-transparent to-40%  rounded-2xl w-full h-full  absolute top-0"></div>
+            <p className="absolute bottom-0 text-white text-2xl ml-2 mb-1 font-bold">
+                    {
+                      info?.aggregatedDiscountInfoV3 ?  info?.aggregatedDiscountInfoV3?.header +
+                      " " +
+                      info?.aggregatedDiscountInfoV3?.subHeader : "" 
+                    }
+                    
+                </p>
           </div>
         ))}
       </div>
-      <hr className="border" />
+      <hr className="border mt-10" />
     </div>
   );
 }

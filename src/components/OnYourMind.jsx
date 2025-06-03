@@ -1,26 +1,27 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 
-function OnYourMind() {
-  const [data, setData] = useState([]);
+function OnYourMind({data}) {
+  // const [data, setData] = useState([]);
   const [value, setValue] = useState(0);
 
-  async function fetchData() {
-    try {
-      const response = await fetch(
-        "/api/dapi/restaurants/list/v5?lat=28.6126255&lng=77.04108959999999&page_type=DESKTOP_WEB_LISTING"
-      );
-      const result = await response.json();
-      console.log(result?.data?.cards[0]);
+  // async function fetchData() {
+  //   try {
+  //     const response = await fetch(
+  //       "/api/dapi/restaurants/list/v5?lat=28.6126255&lng=77.04108959999999&page_type=DESKTOP_WEB_LISTING"
+  //     );
+  //     const result = await response.json();
+  //     console.log(result?.data?.cards[0]);
 
-      setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info);
-    } catch (err) {
-      console.error("Failed to fetch data:", err);
-    }
-  }
+  //     setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info);
+  //   } catch (err) {
+  //     console.error("Failed to fetch data:", err);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   function handleNext() {
     value >= 124 ? "" : setValue((prev) => prev + 31);
