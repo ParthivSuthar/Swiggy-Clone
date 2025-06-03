@@ -10,7 +10,7 @@ function OnYourMind() {
         "/api/dapi/restaurants/list/v5?lat=28.6126255&lng=77.04108959999999&page_type=DESKTOP_WEB_LISTING"
       );
       const result = await response.json();
-      console.log(result?.data?.cards[0]?.card?.card?.imageGridCards?.info);
+      console.log(result?.data?.cards[0]);
 
       setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info);
     } catch (err) {
