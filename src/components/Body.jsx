@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OnYourMind from "./OnYourMind";
 import TopRestaurant from "./TopRestaurant";
+import OnlineFoodDelivery from "./OnlineFoodDelivery";
 
 function Body() {
   const [topRestaurantdata, setTopRestaurantdata] = useState([])
@@ -35,6 +36,7 @@ function Body() {
       <div className="w-[75%] mx-auto mt-3 overflow-hidden ">
         <OnYourMind data={onYourMindData} />
         <TopRestaurant data={topRestaurantdata} />
+        <OnlineFoodDelivery data={topRestaurantdata} />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { Link } from "react-router-dom";
 
-function RestaurantCard( info ) {
+function RestaurantCard(info) {
   return (
-    <>
+    <Link to={`/restaurantmenu/${info?.info?.id}`}>
       <div className="min-w-[295px] h-[182px] relative" key={info?.id}>
         <img
           className="w-full h-full  rounded-2xl object-cover"
@@ -16,7 +17,6 @@ function RestaurantCard( info ) {
               " " +
               info?.info?.aggregatedDiscountInfoV3?.subHeader
             : ""}
-          {console.log(info)}
         </p>
       </div>
       <div className="mt-3">
@@ -32,7 +32,7 @@ function RestaurantCard( info ) {
           {info?.info?.locality}
         </p>
       </div>
-    </>
+    </Link>
   );
 }
 
