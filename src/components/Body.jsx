@@ -13,10 +13,10 @@ function Body() {
           "/api/dapi/restaurants/list/v5?lat=28.6126255&lng=77.04108959999999&page_type=DESKTOP_WEB_LISTING"
         );
         const result = await response.json();
-        console.log(
-          result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-            ?.restaurants
-        );
+        // console.log(
+        //   result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        //     ?.restaurants
+        // );
   
         setTopRestaurantdata(
           result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
