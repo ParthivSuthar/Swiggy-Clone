@@ -16,7 +16,7 @@ function RestaurantMenu() {
     );
     const res = await data.json();
     // console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);
-    // console.log(res?.data?.cards[2]?.card?.card?.info);
+    console.log(res?.data?.cards[2]?.card?.card?.info);
     // console.log(res?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers);
     setResData(res?.data?.cards[2]?.card?.card?.info);
     setDiscountData(
@@ -54,29 +54,38 @@ function RestaurantMenu() {
         <h1 className="font-bold pt-6 text-2xl">{resData.name}</h1>
         <div className="w-full h-[206px] bg-gradient-to-t px-4 pb-4 from-slate-200/70  mt-3 rounded-[30px]">
           <div className="w-full border  border-slate-200/70 rounded-[30px] h-full bg-white">
-            <div className="flex items-center gap-1 font-semibold">
-              <i className="fi fi-ss-circle-star mt-1 text-green-600 text-lg"></i>
-              <span>{resData.avgRating}</span>
-              <span>({resData.totalRatingsString})</span>.
-              <span>{resData.costForTwoMessage}</span>
-            </div>
-            <p className="underline font-semibold text-orange-600 ">
-              {resData?.cuisines?.join(", ")}
-            </p>
-            <div className="flex gap-2 mt-2"  >
-              <div className="w-[9px] flex flex-col justify-center items-center">
-                <div className="w-[7px] h-[7px] bg-gray-500 rounded-full"></div>
-                <div className="w-[1px] h-[25px] bg-gray-500 "></div>
-                <div className="w-[7px] h-[7px] bg-gray-500 rounded-full"></div>
+            <div className="w-full p-4">
+              <div className="flex items-center gap-1 font-semibold">
+                <i className="fi fi-ss-circle-star mt-1 text-green-600 text-lg"></i>
+                <span>{resData.avgRating}</span>
+                <span>({resData.totalRatingsString})</span>.
+                <span>{resData.costForTwoMessage}</span>
               </div>
-              <div className="flex flex-col gap-1 text-sm font-semibold">
-                <p>
-                  Outlet{" "}
-                  <span className="text-gray-500 font-normal">
-                    {resData.locality}
-                  </span>
-                </p>
-                <p>{resData.sla?.slaString}</p>
+              <p className="underline font-semibold text-orange-600 ">
+                {resData?.cuisines?.join(", ")}
+              </p>
+              <div className="flex gap-2 mt-2">
+                <div className="w-[9px] flex flex-col justify-center items-center">
+                  <div className="w-[7px] h-[7px] bg-gray-500 rounded-full"></div>
+                  <div className="w-[1px] h-[25px] bg-gray-500 "></div>
+                  <div className="w-[7px] h-[7px] bg-gray-500 rounded-full"></div>
+                </div>
+                <div className="flex flex-col gap-1 text-sm font-semibold">
+                  <p>
+                    Outlet{" "}
+                    <span className="text-gray-500 font-normal">
+                      {resData.locality}
+                    </span>
+                  </p>
+                  <p>{resData.sla?.slaString}</p>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="w-full">
+              <div className="flex items-center p-3">
+                <img className="w-6" src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_40,h_40/${resData?.feeDetails?.icon}`} alt="" />
+                <span></span>
               </div>
             </div>
           </div>
