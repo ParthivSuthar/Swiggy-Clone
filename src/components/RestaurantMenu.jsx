@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Discount from "./Discount";
@@ -22,17 +23,24 @@ function RestaurantMenu() {
     );
     const res = await data.json();
     // console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);
+    console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR);
     // console.log(res?.data?.cards[2]?.card?.card?.info);
     // console.log(res?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers);
-    console.log(menuData);
+    // console.log(menuData);
     setResData(res?.data?.cards[2]?.card?.card?.info);
     setDiscountData(
       res?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers
     );
-    setMenuData(
-      res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-        ?.card
-    );
+    // setMenuData(
+    //   res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+    //     ?.card
+    // );
+
+    let actualMenu = (res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter((data) => (
+      data?.card?.card?.itemCards
+    ))
+    console.log(actualMenu);
+    setMenuData(actualMenu)
   }
 
   useEffect(() => {
@@ -151,6 +159,11 @@ function RestaurantMenu() {
           <i className={"fi fi-rr-search absolute top-3 right-4"}></i>
         </div>
 
+           <div>
+             {menuData.map(({card: {card: {itemCards, title}}}) => (
+              <h1>{title} ({itemCards.length})</h1>
+             ))}
+           </div>
         
       </div>
     </div>
