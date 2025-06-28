@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Discount from "./Discount";
+import MenuCard from "./MenuCard";
 
 function RestaurantMenu() {
   const { id } = useParams();
@@ -12,6 +14,8 @@ function RestaurantMenu() {
   const [resData, setResData] = useState([]);
   const [discountData, setDiscountData] = useState([]);
   const [value, setValue] = useState(0);
+  const [isOpen, setIsOpen] = useState(false)
+  // const [currIndex, setCurrIndex] = useState(0)
 
   function handleNext() {}
 
@@ -36,12 +40,23 @@ function RestaurantMenu() {
     //     ?.card
     // );
 
-    let actualMenu = (res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter((data) => (
-      data?.card?.card?.itemCards
-    ))
+    let actualMenu =
+      (res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter(
+        (data) => data?.card?.card?.itemCards
+      );
     console.log(actualMenu);
-    setMenuData(actualMenu)
+    setMenuData(actualMenu);
   }
+
+  // Independent Toggle Funct 👇 
+  function toggleFun(){
+    setIsOpen((prev) => !prev);
+  }
+
+  // Dependent Toggle Functionality 👇
+  // function toggleFun(i){
+  //   setCurrIndex(i === currIndex ? null : i)
+  // }
 
   useEffect(() => {
     fetchMenu();
@@ -159,12 +174,17 @@ function RestaurantMenu() {
           <i className={"fi fi-rr-search absolute top-3 right-4"}></i>
         </div>
 
-           <div>
-             {menuData.map(({card: {card: {itemCards, title}}}) => (
-              <h1>{title} ({itemCards.length})</h1>
-             ))}
-           </div>
-        
+        <div>
+          {menuData.map(
+            ({
+              card: {
+                card: { itemCards, title },
+              },
+            }) => (
+              <MenuCard title={title} itemCards={itemCards} />
+            )
+          )}
+        </div>
       </div>
     </div>
   );
