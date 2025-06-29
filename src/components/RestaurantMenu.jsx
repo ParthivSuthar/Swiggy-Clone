@@ -27,7 +27,7 @@ function RestaurantMenu() {
     );
     const res = await data.json();
     // console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);
-    console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR);
+    // console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR);
     // console.log(res?.data?.cards[2]?.card?.card?.info);
     // console.log(res?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers);
     // console.log(menuData);
@@ -42,16 +42,16 @@ function RestaurantMenu() {
 
     let actualMenu =
       (res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter(
-        (data) => data?.card?.card?.itemCards
+        (data) => data?.card?.card?.itemCards || data?.card?.card?.categories
       );
-    console.log(actualMenu);
+    // console.log(actualMenu);
     setMenuData(actualMenu);
   }
 
   // Independent Toggle Funct 👇 
-  function toggleFun(){
-    setIsOpen((prev) => !prev);
-  }
+  // function toggleFun(){
+  //   setIsOpen((prev) => !prev);
+  // }
 
   // Dependent Toggle Functionality 👇
   // function toggleFun(i){
@@ -178,10 +178,10 @@ function RestaurantMenu() {
           {menuData.map(
             ({
               card: {
-                card: { itemCards, title },
+                card,
               },
             }) => (
-              <MenuCard title={title} itemCards={itemCards} />
+              <MenuCard card={card} />
             )
           )}
         </div>
