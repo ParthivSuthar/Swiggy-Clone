@@ -17,28 +17,31 @@ function MenuCard({ card }) {
   if (card.itemCards) {
     const { title, itemCards } = card;
     return (
-      <div className="mt-7">
-        <div className="flex justify-between">
-          <h1>
-            {title} ({itemCards.length})
-          </h1>
-          <i
-            className={
-              "fi  text-xl fi-rr-angle-small-" + (isOpen ? "up" : "down")
-            }
-            onClick={toggleFun}
-          ></i>
+      <>
+        <div className="mt-7">
+          <div className="flex justify-between">
+            <h1 className={"font-bold text-" + (card["@type"] ? "xl" : "base")}>
+              {title} ({itemCards.length})
+            </h1>
+            <i
+              className={
+                "fi  text-xl fi-rr-angle-small-" + (isOpen ? "up" : "down")
+              }
+              onClick={toggleFun}
+            ></i>
+          </div>
+          {isOpen && <DetailMenu itemCards={itemCards} />}
         </div>
-        {isOpen && <DetailMenu itemCards={itemCards} />}
-      </div>
+        <hr className={"my-5 border-" + (card["@type"] ? "[10px]" : "[4px]")} />
+      </>
     );
   } else {
     const { title, categories } = card;
     return (
       <div>
-        <h1>{title}</h1>
-        {categories.map((data) => (
-          <MenuCard card={data} />
+        <h1 className="font-bold text-xl">{title}</h1>
+        {categories.map((data,i) => (
+          <MenuCard key={i} card={data} />
         ))}
       </div>
     );
