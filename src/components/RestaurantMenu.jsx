@@ -13,8 +13,9 @@ function RestaurantMenu() {
   const [menuData, setMenuData] = useState([]);
   const [resData, setResData] = useState([]);
   const [discountData, setDiscountData] = useState([]);
+  const [topPicksData, setTopPicksData] = useState({});
   const [value, setValue] = useState(0);
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
   // const [currIndex, setCurrIndex] = useState(0)
 
   function handleNext() {}
@@ -45,10 +46,16 @@ function RestaurantMenu() {
         (data) => data?.card?.card?.itemCards || data?.card?.card?.categories
       );
     // console.log(actualMenu);
+    // console.log((res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards)?.filter(data => data?.card?.card?.title == "Top Picks")[0]);
+    setTopPicksData(
+      res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
+        (data) => data?.card?.card?.title == "Top Picks"
+      )[0]
+    );
     setMenuData(actualMenu);
   }
 
-  // Independent Toggle Funct 👇 
+  // Independent Toggle Funct 👇
   // function toggleFun(){
   //   setIsOpen((prev) => !prev);
   // }
@@ -167,6 +174,73 @@ function RestaurantMenu() {
 
         <h2 className="text-center mt-5 leading-5">MENU</h2>
 
+        {topPicksData && (
+          <div className="w-full overflow-hidden">
+            <div className="flex justify-between mt-8">
+              <h1 className="font-bold text-xl">
+                {topPicksData?.card?.card?.title}
+              </h1>
+              <div className="flex gap-3">
+                <div
+                  onClick={handlePrev}
+                  className={
+                    ` cursor-pointer rounded-full w-9 h-9 flex justify-center items-center ` +
+                    (value <= 0 ? "bg-gray-100" : "bg-gray-200")
+                  }
+                >
+                  <i
+                    className={
+                      `fi text-2xl mt-1 fi-rr-arrow-small-left ` +
+                      (value <= 0 ? "text-gray-300" : "text-gray-800")
+                    }
+                  ></i>
+                </div>
+                <div
+                  onClick={handleNext}
+                  className={
+                    ` cursor-pointer rounded-full w-9 h-9 flex justify-center items-center ` +
+                    (value >= 124 ? "bg-gray-100" : "bg-gray-200")
+                  }
+                >
+                  <i
+                    className={
+                      `fi text-2xl mt-1 fi-rr-arrow-small-right ` +
+                      (value >= 124 ? "text-gray-300" : "text-gray-800")
+                    }
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-4 mt-5">
+              {topPicksData?.card?.card?.carousel?.map(
+                ({
+                  creativeId,
+                  dish: {
+                    info: { defaultPrice, price, id },
+                  },
+                }) => (
+                  <div key={id} className="min-w-[400px] relative h-[405px]">
+                    <img
+                      className="w-full h-full"
+                      src={
+                        "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/" +
+                        creativeId
+                      }
+                      alt="top picks image"
+                    />
+                    <div className="absolute bottom-4 text-white flex justify-between w-full px-5">
+                      <p className="">₹{defaultPrice / 100 || price / 100}</p>
+                      <button className=" px-10 py-2 font-bold text-green-400 bg-white rounded-xl">
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="w-full  mt-5 relative cursor-pointer">
           <div className="w-full p-3 rounded-xl font-semibold text-lg bg-slate-200 text-center ">
             Search for dishes
@@ -175,15 +249,9 @@ function RestaurantMenu() {
         </div>
 
         <div>
-          {menuData.map(
-            ({
-              card: {
-                card,
-              },
-            }) => (
-              <MenuCard card={card} />
-            )
-          )}
+          {menuData.map(({ card: { card } }) => (
+            <MenuCard card={card} />
+          ))}
         </div>
       </div>
     </div>
