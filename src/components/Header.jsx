@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 function Header() {
@@ -29,9 +29,42 @@ function Header() {
     },
   ];
 
+  const [visible, setVisible] = useState(false);
+  const [address, setAddress] = useState("");
+
+  // function handleSearchFunctionality() {
+  //   setVisible((prev) => !prev);
+  // }
+
+  function handleVisibility() {
+    setVisible((prev) => !prev);
+  }
+
   return (
     <>
-      <div className="w-full shadow-md h-24 flex justify-center items-center">
+      <div className="w-full">
+        <div
+          className={
+            "w-full bg-black/50 h-full  absolute z-30 " +
+            (visible ? "visible" : " invisible")
+          }
+        ></div>
+        <div
+          className={
+            " bg-white flex justify-end  w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 " +
+            (visible ? "left-0" : "-left-[100%]")
+          }
+        >
+          <p
+            className="bg-black text-white p-5 w-[10%]"
+            onClick={handleVisibility}
+          >
+            cut
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full sticky bg-white z-20 top-0 shadow-md h-24 flex justify-center items-center">
         <div className=" w-[70%] flex justify-between">
           <div className="flex items-center">
             <Link to={"/"}>
@@ -41,8 +74,18 @@ function Header() {
                 alt="logo"
               />
             </Link>
-            <div className="flex items-center gap-2">
-              <p className="font-semibold border-b-2 border-black">others</p>
+            <div
+              className="flex items-center gap-2 "
+              onClick={handleVisibility}
+            >
+              <p className="flex items-center">
+                <span className="font-bold border-b-2  border-black">
+                  others
+                </span>
+                <span className="ml-2 max-w-[250px] text-sm opacity-85 line-clamp-1">
+                  {address}
+                </span>
+              </p>
               <i className="fi text-2xl mt-2 text-orange-500 fi-rs-angle-small-down"></i>
             </div>
           </div>

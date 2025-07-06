@@ -9,12 +9,14 @@ function App() {
     //   <Header />
     //   <Body />
     // </>
-    <Routes>
+    <div className="overflow-hidden max-h-screen">
+      <Routes>
       <Route path="/" element={<Header />}>
         <Route path="/" element={<Body />} />
         <Route path="/restaurantmenu/:id" element={<RestaurantMenu />} />
       </Route>
     </Routes>
+    </div>
   );
 }
 
