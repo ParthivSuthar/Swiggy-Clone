@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unsafe-optional-chaining */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Discount from "./Discount";
 import MenuCard from "./MenuCard";
+import { Coordinates } from "../context/contextApi";
 
 function RestaurantMenu() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ function RestaurantMenu() {
   const [discountData, setDiscountData] = useState([]);
   const [topPicksData, setTopPicksData] = useState({});
   const [value, setValue] = useState(0);
+  const {coord : {lat,lng}} = useContext(Coordinates)
   // const [isOpen, setIsOpen] = useState(false)
   // const [currIndex, setCurrIndex] = useState(0)
 
@@ -24,7 +26,7 @@ function RestaurantMenu() {
 
   async function fetchMenu() {
     const data = await fetch(
-      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.6126255&lng=77.04108959999999&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`
+      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`
     );
     const res = await data.json();
     // console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);

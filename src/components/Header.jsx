@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { Coordinates, Visibility } from "../context/contextApi";
+
+// https://www.swiggy.com/dapi/misc/address-recommend?place_id=ChIJLbZ-NFv9DDkRQJY4FbcFcgM
 
 function Header() {
   const navItems = [
@@ -29,8 +32,11 @@ function Header() {
     },
   ];
 
-  const [visible, setVisible] = useState(false);
+  const { visible, setVisible } = useContext(Visibility);
   const [address, setAddress] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+
+  const { setCoord } = useContext(Coordinates);
 
   // function handleSearchFunctionality() {
   //   setVisible((prev) => !prev);
@@ -38,6 +44,29 @@ function Header() {
 
   function handleVisibility() {
     setVisible((prev) => !prev);
+  }
+
+  async function searchResultFun(val) {
+    if (val == "") return;
+    const res = await fetch(
+      `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${val}`
+    );
+    const data = await res.json();
+    console.log(data.data);
+    setSearchResult(data.data);
+  }
+
+  async function fetchLatAndLng(id) {
+    if (id == "") return;
+    const res = await fetch(
+      `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${id}`
+    );
+    const data = await res.json();
+    setCoord({
+      lat: data.data[0].geometry.location.lat,
+      lng: data.data[0].geometry.location.lng,
+    });
+    setAddress(data.data[0].formatted_address);
   }
 
   return (
@@ -51,16 +80,38 @@ function Header() {
         ></div>
         <div
           className={
-            " bg-white flex justify-end  w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 " +
+            " bg-white w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 " +
             (visible ? "left-0" : "-left-[100%]")
           }
         >
-          <p
+          {/* <p
             className="bg-black text-white p-5 w-[10%]"
             onClick={handleVisibility}
           >
             cut
           </p>
+          <input type="text" className="p-5 border focus:outline-none focus:shadow-md" onChange={ setSearchResult} /> */}
+          <div className="flex flex-col gap-4 mt-3 w-full lg-[50%] mr-6">
+            <i className="fi fi-br-cross" onClick={handleVisibility}></i>
+            <input
+              type="text"
+              className="border p-5 focus:outline-none focus:shadow-lg"
+              // onChange={(e) => searchResultFun(e.target.value)}
+              onChange={(e) => searchResultFun(e.target.value)}
+            />
+          </div>
+          <div>
+            <ul>
+              {searchResult.map((data, i) => (
+                <li onClick={() => fetchLatAndLng(data.place_id)} key={i}>
+                  {data.structured_formatting.main_text}
+                  <p className="text-sm opacity-65">
+                    {data.structured_formatting.secondary_text}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
