@@ -58,6 +58,7 @@ function Header() {
 
   async function fetchLatAndLng(id) {
     if (id == "") return;
+    handleVisibility();
     const res = await fetch(
       `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${id}`
     );
@@ -84,13 +85,6 @@ function Header() {
             (visible ? "left-0" : "-left-[100%]")
           }
         >
-          {/* <p
-            className="bg-black text-white p-5 w-[10%]"
-            onClick={handleVisibility}
-          >
-            cut
-          </p>
-          <input type="text" className="p-5 border focus:outline-none focus:shadow-md" onChange={ setSearchResult} /> */}
           <div className="flex flex-col gap-4 mt-3 w-full lg-[50%] mr-6">
             <i className="fi fi-br-cross" onClick={handleVisibility}></i>
             <input
@@ -100,16 +94,29 @@ function Header() {
               onChange={(e) => searchResultFun(e.target.value)}
             />
           </div>
-          <div>
+          <div className="border p-5">
             <ul>
-              {searchResult.map((data, i) => (
-                <li onClick={() => fetchLatAndLng(data.place_id)} key={i}>
-                  {data.structured_formatting.main_text}
-                  <p className="text-sm opacity-65">
-                    {data.structured_formatting.secondary_text}
-                  </p>
-                </li>
-              ))}
+              {searchResult.map((data, i) => {
+                const isLast = i === searchResult.length - 1;
+                return (
+                  <div className="my-5" key={i}>
+                    <div className="flex gap-4">
+                      <i className="fi mt-1 fi-rr-marker"></i>
+                      <li onClick={() => fetchLatAndLng(data.place_id)} key={i}>
+                        {data.structured_formatting.main_text}
+                        <p className="text-sm opacity-65">
+                          {data.structured_formatting.secondary_text}
+                        </p>
+                        {!isLast && (
+                          <p className="opacity-35">
+                            ---------------------------------------------
+                          </p>
+                        )}
+                      </li>
+                    </div>
+                  </div>
+                );
+              })}
             </ul>
           </div>
         </div>

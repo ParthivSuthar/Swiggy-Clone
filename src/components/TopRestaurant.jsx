@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 
-function TopRestaurant({ data }) {
+function TopRestaurant({ data = [], title }) {
   const [value, setValue] = useState(0);
 
   function handleNext() {
@@ -16,7 +16,7 @@ function TopRestaurant({ data }) {
   return (
     <div className="mt-14">
       <div className="flex justify-between mt-5">
-        <h1 className="font-bold text-2xl">Top Restaurants Chains in Delhi</h1>
+        <h1 className="font-bold text-2xl">{title}</h1>
         <div className="flex gap-3">
           <div
             onClick={handlePrev}
