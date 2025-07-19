@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Coordinates, Visibility } from "../context/contextApi";
+import { CartContext, Coordinates, Visibility } from "../context/contextApi";
 
 // https://www.swiggy.com/dapi/misc/address-recommend?place_id=ChIJLbZ-NFv9DDkRQJY4FbcFcgM
 
@@ -9,32 +9,39 @@ function Header() {
     {
       name: "Swiggy Corporate",
       image: "fi-rr-shopping-bag",
+      path: "/corporate",
     },
     {
       name: "Search",
       image: "fi-rr-search",
+      path: "/search",
     },
     {
       name: "Offers",
       image: "fi-rr-badge-percent",
+      path: "/offers",
     },
     {
       name: "Help",
       image: "fi-sr-life-ring",
+      path: "/help",
     },
     {
       name: "Sign in",
       image: "fi-rr-user",
+      path: "/signin",
     },
     {
       name: "Cart",
       image: "fi-rr-shopping-cart-add",
+      path: "/cart",
     },
   ];
 
   const { visible, setVisible } = useContext(Visibility);
   const [address, setAddress] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const { cartData, setCartData } = useContext(CartContext);
 
   const { setCoord } = useContext(Coordinates);
 
@@ -150,11 +157,16 @@ function Header() {
 
           <div className="flex items-center gap-12">
             {navItems.map((data, i) => (
-              <div className="flex items-center gap-2 " key={i}>
-                {/* <i className="fi fi-rr-shopping-bag"></i> */}
-                <i className={"mt-1 fi " + data.image}></i>
-                <p className="text-sm font-medium text-gray-700">{data.name}</p>
-              </div>
+              <Link to={data.path} key={i}>
+                <div className="flex items-center gap-2 ">
+                  {/* <i className="fi fi-rr-shopping-bag"></i> */}
+                  <i className={"mt-1 fi " + data.image}></i>
+                  <p className="text-sm font-medium text-gray-700">
+                    {data.name}
+                  </p>
+                  {data.name === "Cart" && <p>{cartData.length}</p>}
+                </div>
+              </Link>
             ))}
           </div>
         </div>

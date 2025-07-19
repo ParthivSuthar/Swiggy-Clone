@@ -24,6 +24,10 @@ function RestaurantMenu() {
 
   function handlePrev() {}
 
+  function handleAddToCart(){
+    console.log("Add to Cart");
+  }
+
   async function fetchMenu() {
     const data = await fetch(
       `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`
@@ -232,7 +236,7 @@ function RestaurantMenu() {
                     />
                     <div className="absolute bottom-4 text-white flex justify-between w-full px-5">
                       <p className="">₹{defaultPrice / 100 || price / 100}</p>
-                      <button className=" px-10 py-2 font-bold text-green-400 bg-white rounded-xl">
+                      <button onClick={handleAddToCart} className=" px-10 py-2 font-bold text-green-400 bg-white rounded-xl">
                         Add
                       </button>
                     </div>

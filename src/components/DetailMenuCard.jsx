@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 // import React from "react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { CartContext } from "../context/contextApi";
 
-function DetailMenuCard({
-  info: {
+function DetailMenuCard({ info }, i) {
+  const {
     name,
     defaultPrice,
     price,
@@ -13,8 +14,22 @@ function DetailMenuCard({
     },
     description,
     imageId,
-  },
-},i) {
+  } = info;
+
+  const {cartData, setCartData} = useContext(CartContext)
+
+  function handleAddToCart(){
+    const isAdded = cartData.find((data) => data.id === info.id)
+    if(!isAdded){
+
+      setCartData((prev) => [...prev, info])
+      localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
+    } else {
+      alert("Already added")
+    }
+    // console.log(info)
+  }
+
   let veg =
     "https://www.pngkey.com/png/detail/261-2619381_chitr-veg-symbol-svg-veg-and-non-veg.png";
   let nonVeg =
@@ -69,7 +84,7 @@ function DetailMenuCard({
             }
             alt="recipeimg"
           />
-          <button className="border bottom-[-20px] left-5 absolute text-lg font-bold rounded-xl bg-white px-10 text-green-500 py-2 drop-shadow">
+          <button onClick={handleAddToCart} className="border bottom-[-20px] left-5 absolute text-lg font-bold rounded-xl bg-white px-10 text-green-500 py-2 drop-shadow">
             ADD
           </button>
         </div>
